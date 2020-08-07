@@ -1,11 +1,18 @@
 package com.codingchallenge.cams.login.servlet;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.codingchallenge.cams.addattendance.repository.AddAttendance;
 
 /**
  * Servlet implementation class LoginServlet
@@ -26,7 +33,21 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		//RequestDispatcher serve = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher serve=null;
+		HttpSession session=request.getSession(true);
+		Boolean authorized= (Boolean)session.getAttribute("isAuthorized") ;
+		if (authorized!=null && authorized) {
+			//serve = request.getRequestDispatcher("");
+			response.sendRedirect("AddAttendanceServlet");
+		}
+		else
+		{
+			 serve = request.getRequestDispatcher("index.jsp");
+			 serve.forward(request, response);
+		}
+		
 	}
 
 	/**
@@ -34,6 +55,29 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String username="jithu@gmail.com";
+		String password="123";
+		
+		String loginUsername =request.getParameter("loginUsername");
+		String loginPassword = request.getParameter("loginPassword");
+		
+		System.out.println(loginUsername);
+		System.out.println(loginPassword);
+		checkUserValid(loginUsername,loginPassword);
+		
+		Boolean authenticationFailed = true; 
+		if(username.equals(loginUsername)&& password.equals(loginPassword)) {
+			System.out.println("Authentication Successfull");
+			HttpSession session=request.getSession(true);
+			session.setAttribute("isAuthorized",true );
+			session.setAttribute("name","Jithu" );
+			authenticationFailed = false; 
+		}
+		else
+		{
+			System.out.println("Authentication failed");
+		}
+		request.setAttribute("failed",authenticationFailed);
 		doGet(request, response);
 	}
 

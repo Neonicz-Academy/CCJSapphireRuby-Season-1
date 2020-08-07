@@ -1,0 +1,67 @@
+/* your styles go here */
+
+.ones{
+	color: blue;
+}
+#cms{
+	color: #09024d;
+	border: solid black;
+	border-radius: 15px;
+	padding: 10px;
+	margin-left: 35px;
+}
+.btns{
+	margin-right: 20px;
+}
+#day{
+	border-radius: 7px;
+	padding: 5px;
+	background-color: #c6c9cf;
+	margin-right: 5px;
+}
+#month{
+	border-radius: 5px;
+	padding: 5px;
+	background-color: #c6c9cf;
+	margin-right: 7px;
+}
+#year{
+	border-radius: 5px;
+	padding: 5px;
+	background-color: #c6c9cf;
+}
+#months{
+	border-radius: 5px;
+	padding: 5px;
+	margin-left: 5px;
+	margin-right: 7px;
+	background-color: #c6c9cf;
+}
+#years{
+	border-radius: 5px;
+	padding: 5px;
+	background-color: #c6c9cf;
+}
+.selectday{
+	padding: 10px;
+}
+.monthselector{
+	margin-left: 7px;
+}
+.stview { margin-top: 70px; width: 80%; margin-left: 10%; border : 2px solid; box-sizing: border-box; box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.1); font-family: 'Ubuntu'; /*border-collapse: collapse;*/ border-spacing: 0px; background-color: #333333; }
+
+.stviewth, .stviewtd { border: 1px solid rgba(255,255,255,0.1); box-sizing: border-box; }
+
+.stviewth { text-transform: uppercase; font-size:10px; font-weight:700; padding: 10px 0; color: rgba(255,255,255,0.5); background-color: #292929; letter-spacing: 1px; }
+
+.stviewtd { width: 10%; transition: all 0.3s; font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 400; font-size: 14px; padding: 1.5% 1.5% 5%; vertical-align: initial; padding: 1.5% 0 ; height: 75px; }
+
+.day:hover { background-color: rgba(0,0,0,0.1); cursor:pointer; }
+
+.today { color: #FFF; background-color: rgba(0,0,0,.25) !important; }
+
+.present { color: #FFF; background-color: #10c443 !important; }
+
+.absent { color: #FFF; background-color: #f50a0e !important; }
+
+span.number { margin-left: 10% }

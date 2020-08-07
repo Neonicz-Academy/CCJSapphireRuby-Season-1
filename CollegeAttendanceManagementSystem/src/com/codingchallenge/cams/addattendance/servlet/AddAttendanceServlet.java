@@ -1,11 +1,20 @@
 package com.codingchallenge.cams.addattendance.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.codingchallenge.cams.addattendance.repository.AddAttendance;
 
 /**
  * Servlet implementation class AddAttendanceServlet
@@ -26,7 +35,25 @@ public class AddAttendanceServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher serve=null;
+		HttpSession session=request.getSession(true);
+		session.setAttribute("name","Jithu" );
+		Boolean authorized= (Boolean)session.getAttribute("isAuthorized") ;
+		if (authorized!=null && authorized) {
+			serve = request.getRequestDispatcher("addAttendance.jsp");
+			AddAttendance add= new AddAttendance();
+			List<Map<String, String>> students = add.getStudentList();
+			request.setAttribute("students", students);
+		}
+		else
+		{
+			 serve = request.getRequestDispatcher("accesssdenied.jsp");
+		}
+		
+		
+		serve.forward(request, response);
+		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -34,6 +61,31 @@ public class AddAttendanceServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		System.out.println("hi");
+		String[] value = request.getParameterValues("attendanceCheckBox");
+		/*
+		 * String batchId = request.getParameter("batchId"); String facultyId =
+		 * request.getParameter("facultyId"); String studentId =
+		 * request.getParameter("studentId"); System.out.println(batchId);
+		 * System.out.println(facultyId);
+		 */
+		//System.out.println(request.getParameter("optionsRadios1"));
+		System.out.println("value length--"+ value.length);
+		for(int i=0;i<value.length;i++)
+		{
+			if(value[i]==null)
+			{
+				System.out.println(" Validation is not done");
+			}
+			else {
+				AddAttendance add= new AddAttendance();
+				Long studentId=Long.valueOf(value[i]);
+				add.addAtten(studentId);
+			}
+			
+		}
+		
 		doGet(request, response);
 	}
 
