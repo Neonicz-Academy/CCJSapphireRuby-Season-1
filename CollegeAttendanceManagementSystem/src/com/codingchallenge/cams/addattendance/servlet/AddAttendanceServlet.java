@@ -17,8 +17,9 @@ import javax.servlet.http.HttpSession;
 import com.codingchallenge.cams.addattendance.repository.AddAttendance;
 
 /**
- * Servlet implementation class AddAttendanceServlet
- */
+Servlet implementation class AddAttendanceServlet
+*/
+ 
 @WebServlet("/AddAttendanceServlet")
 public class AddAttendanceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,19 +37,20 @@ public class AddAttendanceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		RequestDispatcher serve=null;
-		HttpSession session=request.getSession(true);
-		session.setAttribute("name","Jithu" );
-		Boolean authorized= (Boolean)session.getAttribute("isAuthorized") ;
-		if (authorized!=null && authorized) {
+		/*
+		 * HttpSession session=request.getSession(true);
+		 * session.setAttribute("name","Jithu" ); Boolean authorized=
+		 * (Boolean)session.getAttribute("isAuthorized") ; if (authorized!=null &&
+		 * authorized) {
+		 */
 			serve = request.getRequestDispatcher("addAttendance.jsp");
 			AddAttendance add= new AddAttendance();
 			List<Map<String, String>> students = add.getStudentList();
 			request.setAttribute("students", students);
-		}
-		else
-		{
-			 serve = request.getRequestDispatcher("accesssdenied.jsp");
-		}
+		//}
+		/*
+		 * else { serve = request.getRequestDispatcher("accesssdenied.jsp"); }
+		 */
 		
 		
 		serve.forward(request, response);

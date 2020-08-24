@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.codingchallenge.cams.addattendance.repository.AddAttendance;
+import com.codingchallenge.cams.login.repository.LoginRepository;
 
 /**
  * Servlet implementation class LoginServlet
@@ -34,13 +35,24 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		//RequestDispatcher serve = request.getRequestDispatcher("index.jsp");
+		//
 		RequestDispatcher serve=null;
+	    serve = request.getRequestDispatcher("index.jsp");
 		HttpSession session=request.getSession(true);
 		Boolean authorized= (Boolean)session.getAttribute("isAuthorized") ;
+		String role= (String)session.getAttribute("role") ;
+		
 		if (authorized!=null && authorized) {
+			if(role.equals("Faculty")) {
 			//serve = request.getRequestDispatcher("");
-			response.sendRedirect("AddAttendanceServlet");
+			response.sendRedirect("facultyhome.jsp");
+			}else if(role.equals("Student"))
+			{
+				response.sendRedirect("GetAttendance");
+			}else if(role.equals("Admin"))
+			{
+				response.sendRedirect("admin");
+			}
 		}
 		else
 		{
@@ -55,29 +67,39 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username="jithu@gmail.com";
-		String password="123";
+		/*
+		 * String username="jithu@gmail.com"; String password="123";
+		 */
 		
 		String loginUsername =request.getParameter("loginUsername");
 		String loginPassword = request.getParameter("loginPassword");
 		
 		System.out.println(loginUsername);
 		System.out.println(loginPassword);
-		checkUserValid(loginUsername,loginPassword);
-		
+		LoginRepository log= new LoginRepository();
+		String data=log.checkUserValid(loginUsername,loginPassword);
+		String role=null;
 		Boolean authenticationFailed = true; 
-		if(username.equals(loginUsername)&& password.equals(loginPassword)) {
-			System.out.println("Authentication Successfull");
-			HttpSession session=request.getSession(true);
-			session.setAttribute("isAuthorized",true );
-			session.setAttribute("name","Jithu" );
-			authenticationFailed = false; 
-		}
-		else
-		{
-			System.out.println("Authentication failed");
-		}
-		request.setAttribute("failed",authenticationFailed);
+		 if (data != null) {
+				 HttpSession session = request.getSession();
+				 session.setAttribute("isAuthorized",true );
+				 //response.sendRedirect("AddAttendanceServlet");
+				 session.setAttribute("role",data );
+				 
+			 } else {
+        	 request.setAttribute("failed",authenticationFailed);
+         }
+          
+        // RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+         //dispatcher.forward(request, response);
+		/*
+		 * if(username.equals(loginUsername)&& password.equals(loginPassword)) {
+		 * System.out.println("Authentication Successfull"); HttpSession
+		 * session=request.getSession(true); session.setAttribute("isAuthorized",true );
+		 * session.setAttribute("name","Jithu" ); authenticationFailed = false; } else {
+		 * System.out.println("Authentication failed"); }
+		 * request.setAttribute("failed",authenticationFailed);
+		 */
 		doGet(request, response);
 	}
 

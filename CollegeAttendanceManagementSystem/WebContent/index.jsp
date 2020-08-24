@@ -57,8 +57,8 @@
                 %>
                   <form method="post" class="form-validate mb-4" action="#">
                     <div class="form-group">
-                      <input id="login-username" type="email" name="loginUsername" required data-msg="Please enter your email" class="input-material">
-                      <label for="login-username" class="label-material">Email</label>
+                      <input id="login-username"  name="loginUsername" required data-msg="Please enter your id" class="input-material">
+                      <label for="login-username" class="label-material">UserID</label>
                     </div>
                     <div class="form-group">
                       <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">

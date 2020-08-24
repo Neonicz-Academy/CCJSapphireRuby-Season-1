@@ -87,7 +87,7 @@ public class AddAttendance {
 			try {
 				if (con != null) {
 					con.close();
-				}
+				} 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

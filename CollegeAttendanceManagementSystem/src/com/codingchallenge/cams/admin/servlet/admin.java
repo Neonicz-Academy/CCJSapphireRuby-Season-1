@@ -1,4 +1,4 @@
-package com.codingchallenge.cams.addbatch.servlet;
+package com.codingchallenge.cams.admin.servlet;
 
 import java.io.IOException;
 
@@ -8,18 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class AddBatchForm
+ * Servlet implementation class admin
  */
-@WebServlet("/AddBatchForm")
-public class AddBatchForm extends HttpServlet {
+@WebServlet("/admin")
+public class admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public AddBatchForm() {
+    public admin() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -30,7 +32,14 @@ public class AddBatchForm extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		RequestDispatcher serve=null;
-		serve = request.getRequestDispatcher("newbatch.jsp");
+		serve = request.getRequestDispatcher("adminHome.jsp");
+		
+		/*
+		 * HttpSession session=request.getSession(true); String
+		 * button=(String)session.getAttribute("button") ; if (button.equals("add")) {
+		 * response.sendRedirect("AddBatchForm"); }
+		 */
+		 
 		serve.forward(request, response);
 	}
 
@@ -39,6 +48,9 @@ public class AddBatchForm extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String[] value = request.getParameterValues("addbatch");
+		HttpSession session = request.getSession(); 
+		session.setAttribute("button", value );
 		doGet(request, response);
 	}
 
