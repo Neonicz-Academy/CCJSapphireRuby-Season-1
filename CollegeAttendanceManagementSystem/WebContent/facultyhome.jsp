@@ -83,8 +83,16 @@
         <section class="no-padding-top no-padding-bottom">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-md-4 col-sm-8">
-                <div class="statistic-block block">
+            <%
+                 List<Map<String, String>> batch = (List<Map<String,String>>) request.getAttribute("batch");
+                 if(students==null){
+                	 %><div class="alert alert-warning">NO DATA FOUND</div>
+								<% 
+                	 
+                 }else{
+                      %><form action= "facultyPage" method="post">
+                       <div class="col-md-4 col-sm-8">
+                       <div class="statistic-block block">
                   <div class="progress-details d-flex justify-content-between">
                     <div class="title">
                       <div class="icon"><i class="icon-user-1"></i></div>
@@ -93,7 +101,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-8" >
+                      
+              
+              
+               
+              <!-- <div class="col-md-4 col-sm-8" >
                 <div class="statistic-block block">
                   <div class="progress-details d-flex justify-content-between">
                     <div class="title">
@@ -132,7 +144,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-4 col-sm-8">
                 <div class="statistic-block block">
                   <div class="progress-details d-flex justify-content-between">
