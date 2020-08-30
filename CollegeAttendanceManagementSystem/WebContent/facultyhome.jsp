@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <html>
   <head> 
     <meta charset="utf-8">
@@ -50,7 +52,7 @@
           <div class="right-menu list-inline no-margin-bottom">    
             
             <!-- Log out               -->
-            <div class="list-inline-item logout"><a id="logout" href="index.html" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
+            <div class="list-inline-item logout"><a id="logout" href="logoutServlet" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
           </div>
         </div>
       </nav>
@@ -84,23 +86,39 @@
           <div class="container-fluid">
             <div class="row">
             <%
-                 List<Map<String, String>> batch = (List<Map<String,String>>) request.getAttribute("batch");
-                 if(students==null){
+                 List<Map<String, String>> batchs = (List<Map<String,String>>) request.getAttribute("batchs");
+                 if(batchs==null){
                 	 %><div class="alert alert-warning">NO DATA FOUND</div>
 								<% 
                 	 
                  }else{
-                      %><form action= "facultyPage" method="post">
-                       <div class="col-md-4 col-sm-8">
-                       <div class="statistic-block block">
-                  <div class="progress-details d-flex justify-content-between">
-                    <div class="title">
-                      <div class="icon"><i class="icon-user-1"></i></div>
-                      <div><strong><a href="addAttendance.html">BATCH 1</strong></div></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                                  
+                       for(Map<String,String> row: batchs){
+                    	   %> 
+                    	 <form action= "facultyPage" method="post">   
+						<div class="col-md-4 col-sm-8">
+							<div class="statistic-block block">
+								<div class="progress-details d-flex justify-content-between">
+									<div class="title">
+										<div class="icon">
+											<i class="icon-user-1" name= "batchId" value="<%=row.get("batch_id") %>"></i>
+										</div>
+										<div>
+											<strong><a href="AddAttendanceServlet?batchId=<%=row.get("batch_id") %>"><%=row.get("facultybatch_id") %></strong>
+											<%-- <%String batchId=null;
+											   request.setAttribute("batch_id", batchId.toString());
+											%> --%>
+										</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						</form>
+						<% 
+                                }
+							}
+						%>
                       
               
               

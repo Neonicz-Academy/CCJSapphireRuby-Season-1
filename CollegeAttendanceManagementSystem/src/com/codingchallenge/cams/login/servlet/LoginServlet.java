@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		if (authorized!=null && authorized) {
 			if(role.equals("Faculty")) {
 			//serve = request.getRequestDispatcher("");
-			response.sendRedirect("facultyhome.jsp");
+			response.sendRedirect("facultyPage");
 			}else if(role.equals("Student"))
 			{
 				response.sendRedirect("GetAttendance");
@@ -85,6 +85,7 @@ public class LoginServlet extends HttpServlet {
 				 session.setAttribute("isAuthorized",true );
 				 //response.sendRedirect("AddAttendanceServlet");
 				 session.setAttribute("role",data );
+				 session.setAttribute("Id",loginUsername );
 				 
 			 } else {
         	 request.setAttribute("failed",authenticationFailed);

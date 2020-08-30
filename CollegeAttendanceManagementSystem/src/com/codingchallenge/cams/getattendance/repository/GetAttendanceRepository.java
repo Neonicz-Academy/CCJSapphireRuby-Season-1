@@ -1,34 +1,40 @@
-package com.codingchallenge.cams.facultyfront.repository;
+package com.codingchallenge.cams.getattendance.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class facultyRepository {
-	public List<Map<String, String>> getBatchList(long facultyId) {
-		List<Map<String, String>> batchs = null;
+
+
+public class GetAttendanceRepository {
+	public List<Map<String, String>> getAttenList(String month,String year,long studentId) {
+		List<Map<String, String>> atten = null;
 		Connection con = null;
-		String getValues = "SELECT facultybatch_id,batch_id FROM faculty_batch where faculty_id=?";
+		String getValues = "SELECT attendance, DAY(date_of_attendance) FROM attendance where student_id=? AND YEAR(date_of_attendance) =? AND MONTH(date_of_attendance) = ?";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/cams.db";
 			con = DriverManager.getConnection(url, "root", "assassinscreed");
 			PreparedStatement smt = con.prepareStatement(getValues);
-			smt.setLong(1, facultyId);
+			smt.setLong(1, studentId);
+			smt.setString(2, year);
+			smt.setString(3, month);
 			ResultSet rs = smt.executeQuery();
-			batchs = new ArrayList<Map<String, String>>();
+			atten = new ArrayList<Map<String, String>>();
 			while (rs.next()) {
 				Map<String, String> row = new HashMap<String, String>();
-				row.put("facultybatch_id", rs.getString("facultybatch_id"));
-				row.put("batch_id", rs.getString("batch_id"));
-				batchs.add(row);
+				row.put("attendance", rs.getString("attendance"));
+				row.put("day", rs.getString(" DAY(date_of_attendance)"));
+				//Long day=Long.valueOf( rs.getString(" DAY(date_of_attendance)"));
+				
+				atten.add(row);
 			}
 			
 			
@@ -43,7 +49,9 @@ public class facultyRepository {
 				e.printStackTrace();
 			}
 		}
-		return batchs;
+		return atten;
 	}
+
+	
 
 }

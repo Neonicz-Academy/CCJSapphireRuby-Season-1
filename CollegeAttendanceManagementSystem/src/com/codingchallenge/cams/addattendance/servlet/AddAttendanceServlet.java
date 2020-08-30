@@ -45,6 +45,11 @@ public class AddAttendanceServlet extends HttpServlet {
 		 */
 			serve = request.getRequestDispatcher("addAttendance.jsp");
 			AddAttendance add= new AddAttendance();
+			
+			/*
+			 * String batchId = (String) request.getAttribute("batchId"); Long Id =
+			 * Long.valueOf(batchId); System.out.println("id-->" + Id);
+			 */
 			List<Map<String, String>> students = add.getStudentList();
 			request.setAttribute("students", students);
 		//}
@@ -66,6 +71,11 @@ public class AddAttendanceServlet extends HttpServlet {
 		
 		System.out.println("hi");
 		String[] value = request.getParameterValues("attendanceCheckBox");
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		String day = request.getParameter("day");
+		String date=day.concat("/").concat(month).concat("/").concat(year);
+		System.out.println(date);
 		/*
 		 * String batchId = request.getParameter("batchId"); String facultyId =
 		 * request.getParameter("facultyId"); String studentId =
@@ -81,9 +91,12 @@ public class AddAttendanceServlet extends HttpServlet {
 				System.out.println(" Validation is not done");
 			}
 			else {
+				HttpSession session=request.getSession(true);
+				String facultyId= (String)session.getAttribute("Id") ;
+				Long Id = Long.valueOf(facultyId);
 				AddAttendance add= new AddAttendance();
 				Long studentId=Long.valueOf(value[i]);
-				add.addAtten(studentId);
+				add.addAtten(studentId,date,Id);
 			}
 			
 		}

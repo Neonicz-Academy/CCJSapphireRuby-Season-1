@@ -5,15 +5,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AddAttendance {
 
-	public Boolean addAtten(long studentId) {
+	public Boolean addAtten(long studentId,String date,long facultyId) {
 		Connection con = null;
 		//long studentId=1001;
 	
@@ -21,21 +24,27 @@ public class AddAttendance {
 		Map<String,String> studentDetails= getDetailsByStudentId(studentId);
 		System.out.println("student details------"+ studentDetails.size());
 		Long batchId=Long.valueOf(studentDetails.get("batchId"));
-		Long facultyId=Long.valueOf(studentDetails.get("facultyId"));
+		//Long facultyId=Long.valueOf(studentDetails.get("facultyId"));
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/cams.db";
 			con = DriverManager.getConnection(url, "root", "assassinscreed");
-			String addValues = "INSERT INTO attendance(student_id,batch_id,faculty_id,attendance) VALUES(?,?,?,?)";
+			 String sDate1=date;  
+			    Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+			    System.out.println(sDate1+"\t"+date1); 
+			    Timestamp t = new Timestamp(date1.getTime());
+			    System.out.println("timestamp"+t);
+			String addValues = "INSERT INTO attendance(student_id,batch_id,faculty_id,attendance,date_of_attendance) VALUES(?,?,?,?,?)";
 			PreparedStatement smt = con.prepareStatement(addValues);
 			smt.setLong(1, studentId);
 			smt.setLong(2, batchId );
 			smt.setLong(3, facultyId);
 			smt.setString(4, "p");
+			smt.setTimestamp(5, t);
 			boolean inserted = smt.execute();
 			
 			System.out.println("inserted");
-			if (smt.getUpdateCount() > 0)
+			if (smt.getUpdateCount() > 0) 
 				System.out.println("Data insert successful");
 			else {
 				System.out.println("Data insert failed");
@@ -45,6 +54,9 @@ public class AddAttendance {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -99,6 +111,7 @@ public class AddAttendance {
 
 	public Map<String,String> getDetailsByStudentId(long studentId){
 		String getValues = "SELECT  batch_student.batch_id, faculty_batch.faculty_id FROM batch_student,faculty_batch WHERE faculty_batch.batch_id= batch_student.batch_id AND batch_student.student_id = ?";
+		//String getValues="SELECT  faculty_batch.batch_id FROM faculty_batch WHERE faculty_batch.faculty_id= ?";
 		Connection con = null;
 		Map<String,String> studentDetails= new HashMap<String,String>();
 		try {

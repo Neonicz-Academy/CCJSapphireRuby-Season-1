@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <html>
 <head> 
     <meta charset="utf-8">
@@ -52,7 +54,7 @@
           <div class="right-menu list-inline no-margin-bottom">    
             
             <!-- Log out               -->
-            <div class="list-inline-item logout"><a id="logout" href="index.html" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
+            <div class="list-inline-item logout"><a id="logout" href="logoutServlet" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
           </div>
         </div>
       </nav>
@@ -88,20 +90,21 @@
             <h5 id="department">DEPARTMENT :   </h5>
           </div>
             <div class="selectday">
+            <form action= "GetAttendance" method="post">
                 
                 <h5 class="monthselector">SELECT MONTH AND YEAR &nbsp: &nbsp
 
                     <select name="month" id="months">
                       <option value="0">Month</option>
-                      <option value="1">January</option>
-                      <option value="2">February</option>
-                      <option value="3">March</option>
-                      <option value="4">April</option>
-                      <option value="5">May</option>
-                      <option value="6">June</option>
-                      <option value="7">July</option>
-                      <option value="8">August</option>
-                      <option value="9">September</option>
+                      <option value="01">January</option>
+                      <option value="02">February</option>
+                      <option value="03">March</option>
+                      <option value="04">April</option>
+                      <option value="05">May</option>
+                      <option value="06">June</option>
+                      <option value="07">July</option>
+                      <option value="08">August</option>
+                      <option value="09">September</option>
                       <option value="10">October</option>
                       <option value="11">November</option>
                       <option value="12">December</option>
@@ -109,67 +112,105 @@
 
                     <select name="year" id="years">
                       <option value="0">Year</option>
-                      <option value="1">2020</option>
-                      <option value="2">2021</option>
-                      <option value="3">2022</option>
-                      <option value="4">2023</option>
-                      <option value="5">2024</option>
+                      <option value="2020">2020</option>
+                      <option value="2021">2021</option>
+                      <option value="2022">2022</option>
+                      <option value="2023">2023</option>
+                      <option value="2024">2024</option>
                     </select>
                   </h5>
                   
-                    
-                  
+                  <button type="submit" class="btn btn-secondary float-right">Select</button>   
+                </form>  
                   
                     
                   
           </div>
-        <table class="stview">
-          <tr>
-            <td class="day present stviewtd"><span class="number">1</span></td>
-            <td class="day present stviewtd"><span class="number">2</span></td>
-            <td class="day present stviewtd"><span class="number">3</span></td>
-            <td class="day present stviewtd"><span class="number">4</span></td>
-            <td class="day absent stviewtd"><span class="number">5</span></td>
-            <td class="day present stviewtd"><span class="number">6</span></td>
-          </tr>
-          <tr>
-            <td class="day present stviewtd"><span class="number">7</span></td>
-            <td class="day present stviewtd"><span class="number">8</span></td>
-            <td class="day absent stviewtd"><span class="number">9</span></td>
-            <td class="day absent stviewtd"><span class="number">10</span></td>
-            <td class="day present stviewtd"><span class="number">11</span></td>
-            <td class="day present stviewtd"><span class="number">12</span></td>
-          </tr>
-          <tr>
-            <td class="day present stviewtd"><span class="number">13</span></td>
-            <td class="day present stviewtd"><span class="number">14</span></td>
-            <td class="day present stviewtd"><span class="number">15</span></td>
-            <td class="day present stviewtd"><span class="number">16</span></td>
-            <td class="day present stviewtd"><span class="number">17</span></span></td>
-            <td class="day present stviewtd"><span class="number">18</span></td>
-          </tr>
-          <tr>
-            <td class="day absent stviewtd"><span class="number">19</span></td>
-            <td class="day absent stviewtd"><span class="number">20</span></td>
-            <td class="day present stviewtd"><span class="number">21</span></td>
-            <td class="day present stviewtd"><span class="number">22</span></td>
-            <td class="day present stviewtd"><span class="number">23</span></td>
-            <td class="day present stviewtd"><span class="number">24</span></td>
-          </tr>
-          <tr>
-            <td class="day present stviewtd"><span class="number">25</span></td>
-            <td class="day absent stviewtd"><span class="number">26</span></td>
-            <td class="day absent stviewtd"><span class="number">27</span></td>
-            <td class="day present stviewtd"><span class="number">28</span></td>
-            <td class="day today stviewtd"><span class="number">29</span></td>
-            <td class="day stviewtd"><span class="number">30</span></td> 
-          </tr>
-          <tr>
-            <td class="day stviewtd"><span class="number">31</span></td>
-          </tr>
-        </table>
+				<%
+                 List<Map<String, String>> atten = (List<Map<String,String>>) request.getAttribute("atten");
+                 if(atten==null){
+                	 %>
+				<div class="alert alert-warning">NO DATA FOUND</div>
+				<% 
+                	 
+                 }else{
+                      %>
+				<table class="stview">
+				<tr>
+						<%
+                       
+                    	   for( int i= 1;i<=6;i++){
+                    		   for(Map<String,String> row: atten){
+                    			   
+                    		   
+                    			   Long day=Long.valueOf( row.get("day"));
+                    			   if(i==day)
+                    		   {
+                   %>
 
-        </section>
+						<td class="day present stviewtd"><span class="number">
+								<%row.get("day");%>
+						</span></td>
+						<%}
+                    			   else{
+						
+                    		%>
+						<td class="day absent stviewtd"><span class="number">
+								<%row.get("day"); %>
+						</span></td>
+						<%
+                    			   }
+                    		   }
+                    	   }
+                 }
+						%>
+
+
+
+						<!-- <td class="day present stviewtd"><span class="number">2</span></td>
+						<td class="day present stviewtd"><span class="number">3</span></td>
+						<td class="day present stviewtd"><span class="number">4</span></td>
+						<td class="day absent stviewtd"><span class="number">5</span></td>
+						<td class="day present stviewtd"><span class="number">6</span></td> -->
+					</tr>
+					<tr>
+						<td class="day present stviewtd"><span class="number">7</span></td>
+						<td class="day present stviewtd"><span class="number">8</span></td>
+						<td class="day absent stviewtd"><span class="number">9</span></td>
+						<td class="day absent stviewtd"><span class="number">10</span></td>
+						<td class="day present stviewtd"><span class="number">11</span></td>
+						<td class="day present stviewtd"><span class="number">12</span></td>
+					</tr>
+					<tr>
+						<td class="day present stviewtd"><span class="number">13</span></td>
+						<td class="day present stviewtd"><span class="number">14</span></td>
+						<td class="day present stviewtd"><span class="number">15</span></td>
+						<td class="day present stviewtd"><span class="number">16</span></td>
+						<td class="day present stviewtd"><span class="number">17</span></span></td>
+						<td class="day present stviewtd"><span class="number">18</span></td>
+					</tr>
+					<tr>
+						<td class="day absent stviewtd"><span class="number">19</span></td>
+						<td class="day absent stviewtd"><span class="number">20</span></td>
+						<td class="day present stviewtd"><span class="number">21</span></td>
+						<td class="day present stviewtd"><span class="number">22</span></td>
+						<td class="day present stviewtd"><span class="number">23</span></td>
+						<td class="day present stviewtd"><span class="number">24</span></td>
+					</tr>
+					<tr>
+						<td class="day present stviewtd"><span class="number">25</span></td>
+						<td class="day absent stviewtd"><span class="number">26</span></td>
+						<td class="day absent stviewtd"><span class="number">27</span></td>
+						<td class="day present stviewtd"><span class="number">28</span></td>
+						<td class="day today stviewtd"><span class="number">29</span></td>
+						<td class="day stviewtd"><span class="number">30</span></td>
+					</tr>
+					<tr>
+						<td class="day stviewtd"><span class="number">31</span></td>
+					</tr>
+				</table>
+
+			</section>
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
