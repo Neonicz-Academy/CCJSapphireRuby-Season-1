@@ -44,7 +44,7 @@ public class GetAttendance extends HttpServlet {
 		String month= (String) request.getAttribute("month");
 		String year= (String)request.getAttribute("year");
 		GetAttendanceRepository get= new GetAttendanceRepository();
-		List<Map<String, String>> atten = get.getAttenList(month, year,Id);
+		List<Integer> atten = get.getAttenList(month, year,Id);
 		request.setAttribute("atten", atten);
 		
 		

@@ -16,14 +16,14 @@ import java.util.Map;
 
 public class AddAttendance {
 
-	public Boolean addAtten(long studentId,String date,long facultyId) {
+	public Boolean addAtten(long studentId,String date,long facultyId,long batchId) {
 		Connection con = null;
 		//long studentId=1001;
 	
 		boolean successfull = false;
 		Map<String,String> studentDetails= getDetailsByStudentId(studentId);
 		System.out.println("student details------"+ studentDetails.size());
-		Long batchId=Long.valueOf(studentDetails.get("batchId"));
+		//Long batchId=Long.valueOf(studentDetails.get("batchId"));
 		//Long facultyId=Long.valueOf(studentDetails.get("facultyId"));
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -69,15 +69,17 @@ public class AddAttendance {
 
 	}
 
-	public List<Map<String, String>> getStudentList() {
+	public List<Map<String, String>> getStudentList(long facultyId, long batchId) {
 		List<Map<String, String>> students = null;
-		String getValues = "SELECT batch_student.student_id, batch_student.batch_id, faculty_batch.faculty_id,student_table.student_name FROM batch_student,faculty_batch,student_table WHERE faculty_batch.batch_id= batch_student.batch_id AND batch_student.student_id = student_table.student_id"; 
+		String getValues = "SELECT batch_student.student_id, batch_student.batch_id, faculty_batch.faculty_id,student_table.student_name FROM batch_student,faculty_batch,student_table WHERE faculty_batch.batch_id= ? AND faculty_batch.faculty_id=? AND faculty_batch.batch_id= batch_student.batch_id AND batch_student.student_id = student_table.student_id;"; 
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/cams.db";
 			con = DriverManager.getConnection(url, "root", "assassinscreed");
 			PreparedStatement smt = con.prepareStatement(getValues);
+			smt.setLong(1, batchId );
+			smt.setLong(2, facultyId);
 			ResultSet rs = smt.executeQuery();
 			students = new ArrayList<Map<String, String>>();
 			System.out.println("students length before :>" + students.size());

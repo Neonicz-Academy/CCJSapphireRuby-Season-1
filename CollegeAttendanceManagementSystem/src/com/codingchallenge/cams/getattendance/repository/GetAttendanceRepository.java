@@ -13,10 +13,10 @@ import java.util.HashMap;
 
 
 public class GetAttendanceRepository {
-	public List<Map<String, String>> getAttenList(String month,String year,long studentId) {
-		List<Map<String, String>> atten = null;
+	public List<Integer> getAttenList(String month,String year,long studentId) {
+		List<Integer> atten = null;
 		Connection con = null;
-		String getValues = "SELECT attendance, DAY(date_of_attendance) FROM attendance where student_id=? AND YEAR(date_of_attendance) =? AND MONTH(date_of_attendance) = ?";
+		String getValues = "SELECT DAY(date_of_attendance) as day_of_attendance FROM attendance where student_id=? AND YEAR(date_of_attendance) =? AND MONTH(date_of_attendance) = ?";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,14 +27,16 @@ public class GetAttendanceRepository {
 			smt.setString(2, year);
 			smt.setString(3, month);
 			ResultSet rs = smt.executeQuery();
-			atten = new ArrayList<Map<String, String>>();
+			atten = new ArrayList<Integer>();
 			while (rs.next()) {
-				Map<String, String> row = new HashMap<String, String>();
-				row.put("attendance", rs.getString("attendance"));
-				row.put("day", rs.getString(" DAY(date_of_attendance)"));
+				/*
+				 * Map<String, String> row = new HashMap<String, String>();
+				 * row.put("attendance", rs.getString("attendance")); row.put("day",
+				 * rs.getString("day_of_attendance"));
+				 */
 				//Long day=Long.valueOf( rs.getString(" DAY(date_of_attendance)"));
 				
-				atten.add(row);
+				atten.add(rs.getInt("day_of_attendance"));
 			}
 			
 			

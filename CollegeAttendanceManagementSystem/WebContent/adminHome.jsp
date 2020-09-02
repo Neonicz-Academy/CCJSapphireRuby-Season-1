@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <html>
   <head> 
     <meta charset="utf-8">
@@ -64,7 +67,7 @@
         <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
         <ul class="list-unstyled">
           <li class="active"><a href="adminHome.html"> <i class="icon-home"></i>Home </a></li>
-		  <li><a href="newbatch.jsp"> <i class="icon-padnote" value="add" name="addbatch"></i>Add Batch </a></li>
+		  <li><a href="AddFacultyForm"> <i class="icon-padnote" value="add" name="addbatch"></i>Add Faculty </a></li>
         </ul>
         
       </nav>
@@ -83,33 +86,51 @@
         <!-- Breadcrumb-->
         <section class="no-padding-top">
           <div class="container-fluid">
-            <div class="form-group"><input type="submit" value="Add Faculty" class="btn btn-primary"></div>
+          
+            <!-- <div class="form-group" ><a href="AddFacultyForm"><input type="submit" value="Add Faculty" class="btn btn-primary" name="Add" ></a></div> -->
+          <form action= "admin" method="post">
             <div class="row">
               <div class="col-lg-12">
                 <div class="block  margin-bottom-sm">
+                
 
                   <div class="title"><strong>Faculty Database</strong></div>
-                  
+                 
                     <div class="table-responsive"> 
-                      <table class="table">
+                      <table class="table" id= "myTable">
                         <thead>
                           <tr>
-                            <th>Sl.no</th>
+                            <th>Faculty Id</th>
                             <th>Faculty Name</th>
                             <th>Department</th>
                             <th>Email id</th>
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <tbody>
+										<%
+											List<Map<String, String>> faculty = (List<Map<String, String>>) request.getAttribute("faculty");
+										           if (faculty == null) {
+										%><div class="alert alert-warning">NO DATA FOUND</div>
+										<%
+											} else {
+
+										for (Map<String, String> row : faculty) {
+										%>
+										<tbody>
                         <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                          <td><label class="checkbox-inline"><input id="inlineCheckbox1" type="checkbox" value="option1"> Remove </label></td>
+                          <td><%=row.get("faculty_id") %></td>
+                          <td><%=row.get("faculty_name") %></td>
+                          <td><%=row.get("faculty_dept") %></td>
+                          <td><%=row.get("faculty_email") %></td>
+                          <td><label class="checkbox-inline"><input id="inlineCheckbox1" type="checkbox" name="removeCheckBox" value="<%=row.get("faculty_id") %>"> Remove </label></td>
                         </tr>
-                        <tr>
+                         <% 
+                                }
+							}
+						%>
+						
+						
+                   <!--      <tr>
                           <th scope="row">2</th>
                           <td>Jacob</td>
                           <td>Thornton</td>
@@ -122,17 +143,24 @@
                           <td>the Bird</td>
                           <td>@twitter</td>
                           <td><label class="checkbox-inline"><input id="inlineCheckbox1" type="checkbox" value="option1"> Remove </label></td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                       </table>
                     </div>
+                    
+                  
+                    
                   </div>
                 <div class="col-sm-9 ml-auto">
-                  <button type="submit" class="btn btn-secondary float-right">Cancel</button>
+                 
                   <button type="submit" class="btn btns btn-primary float-right">Save changes</button>
+               
                 </div>
+               
               </div>
+              
             </div>
+            </form>
           </div>
 
         </section>
@@ -146,7 +174,7 @@
         </footer>
       </div>
     </div>
-
+   
     <!-- JavaScript files-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper.js/umd/popper.min.js"> </script>

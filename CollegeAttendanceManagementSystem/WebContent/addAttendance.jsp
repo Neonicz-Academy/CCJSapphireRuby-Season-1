@@ -168,6 +168,8 @@
                     </select>
                   </div>
 								<%
+								String batchId = request.getParameter("batchId");
+								
                  List<Map<String, String>> students = (List<Map<String,String>>) request.getAttribute("students");
                  if(students==null){
                 	 %>
@@ -258,6 +260,7 @@
                   -->
                 <div class="col-sm-9 ml-auto">
                   <button type="submit" class="btn btn-secondary float-right">Cancel</button>
+                  <input type="hidden" name="batchId" value="<%=batchId %>">
                   <button type="submit" class="btn btns btn-primary float-right">Save changes</button>
                 </div>
                 </form>

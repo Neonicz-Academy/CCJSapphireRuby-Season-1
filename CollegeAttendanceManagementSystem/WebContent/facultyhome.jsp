@@ -95,26 +95,23 @@
                                   
                        for(Map<String,String> row: batchs){
                     	   %> 
-                    	 <form action= "facultyPage" method="post">   
+                    	  
 						<div class="col-md-4 col-sm-8">
 							<div class="statistic-block block">
 								<div class="progress-details d-flex justify-content-between">
 									<div class="title">
-										<div class="icon">
-											<i class="icon-user-1" name= "batchId" value="<%=row.get("batch_id") %>"></i>
+										<div class="icon"><i class="icon-user-1" ></i>
 										</div>
 										<div>
 											<strong><a href="AddAttendanceServlet?batchId=<%=row.get("batch_id") %>"><%=row.get("facultybatch_id") %></strong>
-											<%-- <%String batchId=null;
-											   request.setAttribute("batch_id", batchId.toString());
-											%> --%>
+											
 										</div>
 										</a>
 									</div>
 								</div>
 							</div>
 						</div>
-						</form>
+						
 						<% 
                                 }
 							}
@@ -163,7 +160,7 @@
                   </div>
                 </div>
               </div> -->
-              <div class="col-md-4 col-sm-8">
+             <!--  <div class="col-md-4 col-sm-8">
                 <div class="statistic-block block">
                   <div class="progress-details d-flex justify-content-between">
                     <div class="title">
@@ -171,7 +168,7 @@
                       <div><a href="newbatch.html"><strong class="text-primary">ADD NEW BATCH</strong></a></div>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

@@ -127,7 +127,7 @@
                   
           </div>
 				<%
-                 List<Map<String, String>> atten = (List<Map<String,String>>) request.getAttribute("atten");
+                 List<Integer> atten = (List<Integer>) request.getAttribute("atten");
                  if(atten==null){
                 	 %>
 				<div class="alert alert-warning">NO DATA FOUND</div>
@@ -136,78 +136,71 @@
                  }else{
                       %>
 				<table class="stview">
-				<tr>
-						<%
-                       
-                    	   for( int i= 1;i<=6;i++){
-                    		   for(Map<String,String> row: atten){
-                    			   
-                    		   
-                    			   Long day=Long.valueOf( row.get("day"));
-                    			   if(i==day)
-                    		   {
-                   %>
-
-						<td class="day present stviewtd"><span class="number">
-								<%row.get("day");%>
-						</span></td>
-						<%}
-                    			   else{
-						
-                    		%>
-						<td class="day absent stviewtd"><span class="number">
-								<%row.get("day"); %>
-						</span></td>
-						<%
-                    			   }
-                    		   }
-                    	   }
+					<%
+					String presents="";
+					for(int i=1;i<31;i++){
+	                         if(i==1 ){	
+	                         	%>
+		                       		 <tr>
+		                     	<%
+	                          	 }
+	                         	
+	                          if (atten.contains(i))
+	                              	 {
+	                              		presents="present";
+	                              	 }
+	                          else
+	                          {
+	                        	  presents="absent";
+	                          }
+	                              	   %>
+	                              	 <td class="day stviewtd <%=presents %>">
+	                              	 
+	                              	  <span class="number"><%=i %></span>
+	                              	  </td>
+	                        	 <% 
+	                        if(i!= 1 && i%6 == 0){
+	                    	  %>
+	                    	     </tr>
+	                    	  <% 
+	                    	   		 if(i<30){
+	                    		   			 %>
+		                            		 <tr>
+		                            		<%
+	                    	      		}
+	                           }
+					  }
+					%>
+					<tr> 
+					<% if (atten.contains(31))
+	                              	 {
+	                              		presents="present";
+	                              	 }
+	                          else
+	                          {
+	                        	  presents="absent";
+	                          }
+	                              	   %>
+	                              	 <td class="day stviewtd <%=presents %>">
+	                              	 
+	                              	  <span class="number">31</span>
+	                              	  </td>
+	                        	 
+					
+					</tr>
+						<% 
                  }
-						%>
+	                  %>
 
 
 
-						<!-- <td class="day present stviewtd"><span class="number">2</span></td>
+					<!-- <td class="day present stviewtd"><span class="number">2</span></td>
 						<td class="day present stviewtd"><span class="number">3</span></td>
 						<td class="day present stviewtd"><span class="number">4</span></td>
 						<td class="day absent stviewtd"><span class="number">5</span></td>
 						<td class="day present stviewtd"><span class="number">6</span></td> -->
-					</tr>
-					<tr>
-						<td class="day present stviewtd"><span class="number">7</span></td>
-						<td class="day present stviewtd"><span class="number">8</span></td>
-						<td class="day absent stviewtd"><span class="number">9</span></td>
-						<td class="day absent stviewtd"><span class="number">10</span></td>
-						<td class="day present stviewtd"><span class="number">11</span></td>
-						<td class="day present stviewtd"><span class="number">12</span></td>
-					</tr>
-					<tr>
-						<td class="day present stviewtd"><span class="number">13</span></td>
-						<td class="day present stviewtd"><span class="number">14</span></td>
-						<td class="day present stviewtd"><span class="number">15</span></td>
-						<td class="day present stviewtd"><span class="number">16</span></td>
-						<td class="day present stviewtd"><span class="number">17</span></span></td>
-						<td class="day present stviewtd"><span class="number">18</span></td>
-					</tr>
-					<tr>
-						<td class="day absent stviewtd"><span class="number">19</span></td>
-						<td class="day absent stviewtd"><span class="number">20</span></td>
-						<td class="day present stviewtd"><span class="number">21</span></td>
-						<td class="day present stviewtd"><span class="number">22</span></td>
-						<td class="day present stviewtd"><span class="number">23</span></td>
-						<td class="day present stviewtd"><span class="number">24</span></td>
-					</tr>
-					<tr>
-						<td class="day present stviewtd"><span class="number">25</span></td>
-						<td class="day absent stviewtd"><span class="number">26</span></td>
-						<td class="day absent stviewtd"><span class="number">27</span></td>
-						<td class="day present stviewtd"><span class="number">28</span></td>
-						<td class="day today stviewtd"><span class="number">29</span></td>
-						<td class="day stviewtd"><span class="number">30</span></td>
-					</tr>
-					<tr>
-						<td class="day stviewtd"><span class="number">31</span></td>
-					</tr>
+					
+					
 				</table>
 
 			</section>
