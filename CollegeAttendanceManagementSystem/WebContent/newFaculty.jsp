@@ -94,7 +94,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Faculty Name</label>
                         <div class="col-sm-9">
-                          <input type="facName" name="name" class="form-control">
+                          <input type="facName" name="name" required data-msg="Please enter Faculty name"  class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
@@ -115,18 +115,18 @@
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Faculty ID</label>
                         <div class="col-sm-9">
-                          <input type="facId" name="Id" class="form-control">
+                          <input type="facId" name="Id" required data-msg="Please enter Faculty ID"  class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <label class="col-sm-3 form-control-label">Faculty Email</label>
                         <div class="col-sm-9">
-                          <input type="facEmail" name="Email" class="form-control">
+                          <input type="facEmail" name="Email"  required data-msg="Please enter email"  class="form-control">
                         </div>
                       </div>
                       <div class="line"></div>
-                     <button type="submit" name="save"  class="btn btn-primary">Save changes</button>
+                     <button type="submit" name="save" value="save"  class="btn btn-primary">Save changes</button>
                     </form>
                   </div>
                 </div>

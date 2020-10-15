@@ -82,13 +82,27 @@
             <h2 class="h5 no-margin-bottom"><strong class="text-primary">Home&nbsp</strong></h2>
           </div>
         </div>
+        <% 
+         List<Map<String, String>> students = (List<Map<String,String>>) request.getAttribute("students");
+                 if(students==null){
+                	 %><div class="alert alert-warning">NO DATA FOUND</div>
+								<% 
+                	 
+                 }else{
+                                  
+                       for(Map<String,String> row: students){
+                    	   %> 
         <section class="no-padding-top no-padding-bottom">
           <div class="container-fluid studentdetails">
-            <h5 id="studentName"> NAME : </h5>
-            <h5 id="studentRegNum"> REGISTER NUMBER : </h5>
-            <h5 id="semester">SEMESTER : </h5>
-            <h5 id="department">DEPARTMENT :   </h5>
+            <h5 id="studentName"> NAME : <%=row.get("studentName") %> </h5>
+            <h5 id="studentRegNum"> REGISTER NUMBER : <%=row.get("studentId") %> </h5>
+            <h5 id="semester">EMAIL ID : <%=row.get("email") %> </h5>
+           <!--  <h5 id="department">DEPARTMENT :   </h5> -->
           </div>
+          <% 
+                                }
+							}
+						%>
             <div class="selectday">
             <form action= "GetAttendance" method="post">
                 

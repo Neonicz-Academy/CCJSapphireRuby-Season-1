@@ -54,6 +54,39 @@ public class GetAttendanceRepository {
 		return atten;
 	}
 
-	
-
+	public List<Map<String,String>>getStudent(long studentId){
+			List<Map<String, String>> students = null;
+			Connection con = null;
+			String getValues = "SELECT student_id,student_name,student_email FROM student_table WHERE student_id=?";
+			
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				String url = "jdbc:mysql://localhost:3306/cams.db";
+				con = DriverManager.getConnection(url, "root", "assassinscreed");
+				PreparedStatement smt = con.prepareStatement(getValues);
+				smt.setLong(1, studentId);
+				ResultSet rs = smt.executeQuery();
+				students = new ArrayList<Map<String, String>>();
+				while (rs.next()) {
+					Map<String, String> row = new HashMap<String, String>();
+					row.put("studentId", rs.getString("student_id"));
+					row.put("studentName", rs.getString("student_name"));
+					row.put("email", rs.getString("student_email"));
+					students.add(row);
+				}
+				
+				
+			}catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return students;
+		}
 }

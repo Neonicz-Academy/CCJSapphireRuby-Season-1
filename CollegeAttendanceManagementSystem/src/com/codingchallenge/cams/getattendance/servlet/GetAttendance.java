@@ -46,7 +46,8 @@ public class GetAttendance extends HttpServlet {
 		GetAttendanceRepository get= new GetAttendanceRepository();
 		List<Integer> atten = get.getAttenList(month, year,Id);
 		request.setAttribute("atten", atten);
-		
+		List<Map<String, String>> students = get.getStudent(Id);
+		request.setAttribute("students", students);
 		
 		serve.forward(request, response);
 	}

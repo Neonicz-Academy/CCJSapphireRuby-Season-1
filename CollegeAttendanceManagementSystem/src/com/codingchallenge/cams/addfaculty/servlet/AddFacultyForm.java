@@ -32,9 +32,17 @@ public class AddFacultyForm extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		RequestDispatcher serve=null;
-		serve = request.getRequestDispatcher("newFaculty.jsp");
 		
+		//String save=(String) request.getAttribute("save");
 		
+		/*
+		 * if ((null != request.getAttribute("save")) &&
+		 * (request.getAttribute("save").equals("save"))) {
+		 * response.sendRedirect("admin"); } else {
+		 */
+
+			serve = request.getRequestDispatcher("newFaculty.jsp");
+		//}
 
 		serve.forward(request, response);
 	}
@@ -52,6 +60,7 @@ public class AddFacultyForm extends HttpServlet {
 		System.out.println(name+" "+department+" "+Id+" "+email);
 		Long id = Long.valueOf(Id);
 		request.setAttribute("save",save);
+		System.out.println(save);
 		addFacultyRepository add=new addFacultyRepository();
 		add.addFaculty(name, department, id, email);
 		doGet(request, response);
